@@ -1,18 +1,31 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
-
+import {
+  StyleSheet,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+  Easing
+} from "react-native";
+import LottieView from "lottie-react-native";
 import PlaceInput from "./src/components/PlaceInput/PlaceInput";
 import PlaceList from "./src/components/PlaceList/PlaceList";
 import PlaceDetail from "./src/components/PlaceDetail/PlaceDetail";
+import axios from "axios";
 
 export default class App extends Component {
   state = {
     places: [],
-    selectedPlace: null
+    selectedPlace: null,
+    progress: new Animated.Value(0),
+    todos: []
   };
 
+  componentDidMount() {
+    axios.get("http://192.168.0.4:8000/api/todo")
+      .then(res => this.setState({ todos: res.data }));
+  }
+
   placeAddedHandler = placeName => {
-    console.log(placeName);
     this.setState(prevState => {
       return {
         places: prevState.places.concat({
@@ -55,7 +68,6 @@ export default class App extends Component {
   };
 
   render() {
-    console.log(this.state.places)
     return (
       <View style={styles.container}>
         <PlaceDetail
@@ -80,5 +92,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start"
-  }
+  },
 });
