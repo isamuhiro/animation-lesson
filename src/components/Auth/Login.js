@@ -12,28 +12,37 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animation: new Animated.Value(1)
+      animation: new Animated.Value(0)
     };
   }
 
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 0,
-      duration: 250
+      toValue: 300,
+      duration: 500
     }).start(()=>{
       Animated.timing(this.state.animation, {
-        toValue: 1,
-        duration: 250
+        toValue: 0,
+        duration: 500
       }).start()
     });
   };
 
   render() {
-    const animatedStyles = { opacity: this.state.animation };
+    const animatedStyle = {
+      transform: [
+        {
+          translateY: this.state.animation
+        },
+        {
+          translateX: this.state.animation
+        }
+      ]
+    };
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.startAnimation}>
-          <Animated.View style={[styles.box, animatedStyles]} />
+          <Animated.View style={[styles.box, animatedStyle]} />
         </TouchableWithoutFeedback>
       </View>
     );
