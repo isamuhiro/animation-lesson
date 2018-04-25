@@ -59,6 +59,7 @@ class Login extends Component {
           placeholder="Password"
           leftIcon={<Icon.Foundation name="unlock" size={24} color="#fff" />}
           containerStyle={inputContainer}
+          inputStyle={{color:"#FFF"}}
           inputContainerStyle={input}
           color="#fff"
           secureTextEntry
