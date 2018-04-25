@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity
 } from "react-native";
+import { Actions } from "react-native-router-flux";
 import Icon from "react-native-vector-icons";
 import { Input, Button } from "react-native-elements";
 import { Font } from "expo";
@@ -66,16 +67,16 @@ class Login extends Component {
         />
 
         <Button
-          title="Get Started"
+          title="Get Started 🐱"
           titleStyle={buttonTitleStyle}
           buttonStyle={buttonStyle}
           containerStyle={{ width: "100%" }}
         />
         <View style={box}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{Actions.register()}}>
             <Text style={textStyle}>Create Account</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{Actions.forgotPassword()}}>
             <Text style={textStyle}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>

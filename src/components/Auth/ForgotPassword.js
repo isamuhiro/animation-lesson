@@ -8,12 +8,12 @@ import {
   ImageBackground,
   TouchableOpacity
 } from "react-native";
-import Icon from "react-native-vector-icons";
 import { Actions } from "react-native-router-flux";
+import Icon from "react-native-vector-icons";
 import { Input, Button } from "react-native-elements";
 import { Font } from "expo";
 
-class Register extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,43 +44,30 @@ class Register extends Component {
       >
         <View>
           {this.state.fontLoaded ? (
-            <Text style={[h1, { fontFamily: "lobster-regular" }]}>Create account</Text>
+            <Text style={[h1, { fontFamily: "lobster-regular" }]}>
+              Forgot your Password?
+            </Text>
           ) : null}
         </View>
-        <Input
-          placeholder="Username"
-          leftIcon={<Icon.MaterialIcons name="person" size={24} color="#fff" />}
-          containerStyle={inputContainer}
-          inputStyle={{color:"#FFF"}}
-          inputContainerStyle={input}
-        />
         <Input
           placeholder="Email"
           leftIcon={<Icon.Foundation name="mail" size={24} color="#fff" />}
           containerStyle={inputContainer}
-          inputStyle={{color:"#FFF"}}
+          inputStyle={{ color: "#FFF" }}
           inputContainerStyle={input}
           keyboardType="email-address"
         />
-        <Input
-          placeholder="Password"
-          leftIcon={<Icon.Foundation name="unlock" size={24} color="#fff" />}
-          containerStyle={inputContainer}
-          inputStyle={{color:"#FFF"}}
-          inputContainerStyle={input}
-          color="#fff"
-          secureTextEntry
-        />
-
         <Button
-          title="Continue 🐱"
+          title="Send me an e-mail"
           titleStyle={buttonTitleStyle}
           buttonStyle={buttonStyle}
           containerStyle={{ width: "100%" }}
         />
-        <TouchableOpacity onPress={()=>Actions.login()}>
+        <View>
+          <TouchableOpacity onPress={()=>Actions.login()}>
             <Text style={textStyle}>Back to Login</Text>
           </TouchableOpacity>
+        </View>
       </ImageBackground>
     );
   }
@@ -132,4 +119,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Register;
+export default ForgotPassword;

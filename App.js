@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { Scene, Router, Tabs, Drawer, Stack } from "react-native-router-flux";
 import Home from "./src/components/Home/Home";
 import Login from "./src/components/Auth/Login";
+import Register from "./src/components/Auth/Register";
+import ForgotPassword from "./src/components/Auth/ForgotPassword";
 
 const getSceneStyle = () => ({
   backgroundColor: "#F5FCFF",
@@ -22,6 +24,8 @@ const App = () => {
       <Stack hideNavBar key="root" titleStyle={{ alignSelf: "center" }}>
         <Stack key="auth" titleStyle={{ alignSelf: "center" }} navBar={Header}>
           <Scene hideNavBar key="login" component={Login}/>
+          <Scene hideNavBar key="register" component={Register}/>
+          <Scene hideNavBar key="forgotPassword" component={ForgotPassword}/>
         </Stack>
         <Scene key="home" hideTabBar component={Home} />
       </Stack>
