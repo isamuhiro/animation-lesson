@@ -8,16 +8,20 @@ import {
   ImageBackground,
   TouchableOpacity
 } from "react-native";
-import Icon from "react-native-vector-icons";
 import { Actions } from "react-native-router-flux";
 import { Input, Button } from "react-native-elements";
 import { Font } from "expo";
+import Icon from "react-native-vector-icons";
+import AwesomeAlert from 'react-native-awesome-alerts';
+import axios from "axios";
 
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fontLoaded: false
+      fontLoaded: false,
+      user: {},
+      showAlert: false
     };
   }
 
@@ -27,6 +31,31 @@ class Register extends Component {
     });
     this.setState({ fontLoaded: true });
   }
+
+  _usernameHandler = name => {
+    this.setState(prevState => {
+      return { user: { ...prevState.user, name } };
+    });
+  };
+
+  emailHandler = email => {
+    this.setState(prevState => {
+      return { user: { ...prevState.user, email } };
+    });
+  };
+
+  passwordHandler = password => {
+    this.setState(prevState => {
+      return { user: { ...prevState.user, password } };
+    });
+  };
+
+  submitHandler = () => {
+    axios
+      .post("http://192.168.0.4:8000/api/users", { ...this.state.user })
+      .then(res => console.log(res.data));
+  };
+
   render() {
     const {
       inputContainer,
@@ -44,31 +73,39 @@ class Register extends Component {
       >
         <View>
           {this.state.fontLoaded ? (
-            <Text style={[h1, { fontFamily: "lobster-regular" }]}>Create account</Text>
+            <Text style={[h1, { fontFamily: "lobster-regular" }]}>
+              Create account
+            </Text>
           ) : null}
         </View>
         <Input
           placeholder="Username"
           leftIcon={<Icon.MaterialIcons name="person" size={24} color="#fff" />}
           containerStyle={inputContainer}
-          inputStyle={{color:"#FFF"}}
+          inputStyle={{ color: "#FFF" }}
           inputContainerStyle={input}
+          onChangeText={text => this._usernameHandler(text)}
+          value={this.state.user.username}
         />
         <Input
           placeholder="Email"
           leftIcon={<Icon.Foundation name="mail" size={24} color="#fff" />}
           containerStyle={inputContainer}
-          inputStyle={{color:"#FFF"}}
+          inputStyle={{ color: "#FFF" }}
           inputContainerStyle={input}
+          onChangeText={text => this.emailHandler(text)}
+          value={this.state.user.email}
           keyboardType="email-address"
         />
         <Input
           placeholder="Password"
           leftIcon={<Icon.Foundation name="unlock" size={24} color="#fff" />}
           containerStyle={inputContainer}
-          inputStyle={{color:"#FFF"}}
+          inputStyle={{ color: "#FFF" }}
           inputContainerStyle={input}
           color="#fff"
+          onChangeText={text => this.passwordHandler(text)}
+          value={this.state.user.password}
           secureTextEntry
         />
 
@@ -77,10 +114,11 @@ class Register extends Component {
           titleStyle={buttonTitleStyle}
           buttonStyle={buttonStyle}
           containerStyle={{ width: "100%" }}
+          onPress={() => this.submitHandler()}
         />
-        <TouchableOpacity onPress={()=>Actions.login()}>
-            <Text style={textStyle}>Back to Login</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => Actions.login()}>
+          <Text style={textStyle}>Back to Login</Text>
+        </TouchableOpacity>
       </ImageBackground>
     );
   }
