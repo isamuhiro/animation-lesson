@@ -58,11 +58,10 @@ class Login extends Component {
           .get(`http://192.168.0.4:8000/api/user`, {
             headers: { Authorization: bearer }
           })
-          .then(
-            res =>
-              AsyncStorage.setItem('user_auth', JSON.stringify(res.data)).then(
-                res => Actions.home()
-              )
+          .then(res =>
+            AsyncStorage.setItem('user_auth', JSON.stringify(res.data)).then(
+              res => Actions.app()
+            )
           )
       })
   }

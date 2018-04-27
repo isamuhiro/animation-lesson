@@ -9,8 +9,9 @@ import {
 } from 'react-native'
 import axios from 'axios'
 
-export default class Home extends Component {
+export default class About extends Component {
   state = {
+    places: [],
     todos: [],
     user: {}
   }
@@ -23,6 +24,21 @@ export default class Home extends Component {
           .get('http://192.168.0.4:8000/api/todo')
           .then(res => this.setState({ todos: res.data, user }))
       )
+  }
+
+  placeAddedHandler = placeName => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat({
+          key: new Date().toString(),
+          name: placeName,
+          image: {
+            uri:
+              'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg'
+          }
+        })
+      }
+    })
   }
 
   render() {
