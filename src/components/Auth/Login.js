@@ -54,6 +54,7 @@ class Login extends Component {
       .then(res => {
         this.setState({ user: { username: '', email: '', password: '' } })
         let bearer = `Bearer ${res.data.access_token}`
+        console.log(bearer)
         axios
           .get(`http://192.168.0.4:8000/api/user`, {
             headers: { Authorization: bearer }
@@ -63,6 +64,15 @@ class Login extends Component {
               res => Actions.app()
             )
           )
+      })
+      .catch(error => {
+        switch (error.response.data.hint) {
+          case 'Check the `username` parameter':
+            alert('Email inválido')
+            break
+          default:
+            alert('Dados invalidos')
+        }
       })
   }
 

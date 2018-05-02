@@ -1,15 +1,17 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Header } from 'react-native-elements'
-
+import Title from './Title'
 import Icon from 'react-native-vector-icons/Entypo'
+import Logout from './Logout'
+import Hamburguer from './Hamburguer'
 
 export default props => {
   return (
     <Header
-      leftComponent={{ icon: 'menu', color: '#fff', size: 30 }}
-      centerComponent={{ text: 'Catfy', style: { color: '#fff', fontSize:30 }  }}
-      rightComponent={{ icon: 'home', color: '#fff', size: 30 }}
+      leftComponent={<Hamburguer />}
+      centerComponent={<Title title={'Catfy'} />}
+      rightComponent={<Logout />}
       innerContainerStyles={styles.innerContainer}
       outerContainerStyles={styles.outerContainer}
     />

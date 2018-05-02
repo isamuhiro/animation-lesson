@@ -21,7 +21,8 @@ class Register extends Component {
     this.state = {
       fontLoaded: false,
       user: {},
-      showAlert: false
+      showAlert: false,
+      hasErrors: false
     }
   }
 
@@ -54,8 +55,14 @@ class Register extends Component {
     axios
       .post('http://192.168.0.4:8000/api/users', { ...this.state.user })
       .then(res => {
-        this.setState({ user: { username: '', email: '', password: '' } })
+        this.setState({
+          user: { username: '', email: '', password: '' },
+          hasErrors: false
+        })
         console.log(res.data)
+      })
+      .catch(error => {
+        this.setState({ hasErrors: error.response.data })
       })
   }
 
@@ -89,6 +96,10 @@ class Register extends Component {
           onChangeText={text => this._usernameHandler(text)}
           value={this.state.user.name}
         />
+        {this.state.hasErrors &&
+          (this.state.hasErrors.name && (
+            <Text style={{ color: 'red' }}>Usuario invalido</Text>
+          ))}
         <Input
           placeholder="Email"
           leftIcon={<Icon.Foundation name="mail" size={24} color="#fff" />}
@@ -99,6 +110,10 @@ class Register extends Component {
           value={this.state.user.email}
           keyboardType="email-address"
         />
+        {this.state.hasErrors &&
+          (this.state.hasErrors.email && (
+            <Text style={{ color: 'red' }}>Email invalido</Text>
+          ))}
         <Input
           placeholder="Password"
           leftIcon={<Icon.Foundation name="unlock" size={24} color="#fff" />}
@@ -110,7 +125,10 @@ class Register extends Component {
           value={this.state.user.password}
           secureTextEntry
         />
-
+        {this.state.hasErrors &&
+          (this.state.hasErrors.password && (
+            <Text style={{ color: 'red' }}>Senha invalida</Text>
+          ))}
         <Button
           title="Continue 🐱"
           titleStyle={buttonTitleStyle}
@@ -168,7 +186,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomColor: 'rgba(0,0,0,0)',
-    padding: 10
+    padding: 5
   }
 })
 
