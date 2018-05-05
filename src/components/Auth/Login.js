@@ -103,6 +103,7 @@ class Login extends Component {
           inputStyle={{ color: '#FFF' }}
           inputContainerStyle={input}
           keyboardType="email-address"
+          autoCapitalize={'none'}
           onChangeText={text => this._emailHandler(text)}
           value={this.state.user.username}
         />
@@ -111,6 +112,7 @@ class Login extends Component {
           leftIcon={<Icon.Foundation name="unlock" size={24} color="#fff" />}
           containerStyle={inputContainer}
           inputStyle={{ color: '#FFF' }}
+          autoCapitalize={'none'}
           inputContainerStyle={input}
           color="#fff"
           secureTextEntry
