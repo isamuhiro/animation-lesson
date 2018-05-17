@@ -5,30 +5,45 @@ import {
   Animated,
   TouchableWithoutFeedback,
   Text,
-  AsyncStorage
+  AsyncStorage,
+  FlatList,
+  ActivityIndicator
 } from 'react-native'
+import { Tile } from 'react-native-elements'
+import ProductList from '../Product/ProductList'
 import axios from 'axios'
 
 export default class Home extends Component {
   state = {
     todos: [],
-    user: {}
+    user: {},
+    products: []
   }
 
   componentDidMount() {
     AsyncStorage.getItem('user_auth')
       .then(res => JSON.parse(res))
-      .then(user =>
+      .then(user => {
         axios
-          .get('http://192.168.0.4:8000/api/todo')
-          .then(res => this.setState({ todos: res.data, user }))
-      )
+          .get('http://192.168.0.4:8000/api/products')
+          .then(res => this.setState({ products: res.data, user }))
+          .catch(e => console.log('nao buscou'))
+      })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>{`${this.state.user.name}`}</Text>
+        {this.state.user != {} ? (
+          <Text>{`Welcome, ${this.state.user.name}`}</Text>
+        ) : (
+          <ActivityIndicator size="large" color="#0000ff" />
+        )}
+        {this.state.products !== [] ? (
+          <ProductList data={this.state.products} />
+        ) : (
+          <ActivityIndicator size="large" color="#0000ff" />
+        )}
       </View>
     )
   }
@@ -37,9 +52,6 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 26,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+    backgroundColor: '#fff'
   }
 })

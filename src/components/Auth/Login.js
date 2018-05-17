@@ -49,7 +49,7 @@ class Login extends Component {
         grant_type: 'password',
         scope: '*',
         client_id: 2,
-        client_secret: 'qzyUD8VfPbyI3zAoKNChQhG2Rw5Edn3Ueuu2KUHc'
+        client_secret: 'FTdPAfwieiaDsGRlwtajDPkgKResLratAHqmr5IM'
       })
       .then(res => {
         this.setState({ user: { username: '', email: '', password: '' } })
